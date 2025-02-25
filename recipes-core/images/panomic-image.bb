@@ -7,7 +7,6 @@ DEPENDS += "rpi-bootfiles"
 
 IMAGE_FEATURES += "\
     splash \
-    ssh-server-dropbear \
     package-management \
 "
 CORE_IMAGE_EXTRA_INSTALL = " \
