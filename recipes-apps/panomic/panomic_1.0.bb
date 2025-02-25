@@ -14,7 +14,7 @@ inherit systemd
 SRC_URI = " \
     file://hmi.service \
     file://hmi-ui-forge_1.0.0_arm64.deb \
-    file://LICENSE
+    file://LICENSE \
 "
 
 SYSTEMD_AUTO_ENABLE = "enable"
