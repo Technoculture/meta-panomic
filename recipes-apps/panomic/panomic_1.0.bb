@@ -29,16 +29,8 @@ do_install:append() {
     # Install the service file with the correct permissions (0644 for systemd service files)
     install -m 0644 ${WORKDIR}/hmi.service ${D}${systemd_system_unitdir}/hmi.service
 
-    # Install the .deb file
-    install -d ${D}${bindir}
-    dpkg -x ${WORKDIR}/hmi-ui-forge_1.0.0_arm64.deb ${D}
 }
 
 # Add the systemd service file to the package
 FILES:${PN} += "${systemd_system_unitdir}/system/hmi.service"
 
-# Add the binary to the package
-FILES:${PN} += " \
-    ${bindir}/hmi-ui-forge \
-    /usr/bin/${PN} \
-"
