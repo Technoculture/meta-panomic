@@ -1,0 +1,62 @@
+From 863f8656ff78e87d5b018e7a2aa20adbb4e7a189 Mon Sep 17 00:00:00 2001
+From: sundaravinayagam <vinaysun21@gmail.com>
+Date: Tue, 11 Mar 2025 17:00:51 +0000
+Subject: [PATCH 1/1] Delete Getty Service for auto login
+
+---
+ meta/recipes-core/systemd/systemd_255.17.bb    |  2 ++
+ .../python/python3/python3-manifest.json       | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/meta/recipes-core/systemd/systemd_255.17.bb b/meta/recipes-core/systemd/systemd_255.17.bb
+index 8f5170929f..71d7520086 100644
+--- a/meta/recipes-core/systemd/systemd_255.17.bb
++++ b/meta/recipes-core/systemd/systemd_255.17.bb
+@@ -404,6 +404,8 @@ do_install() {
+ 	if [ -e ${D}${nonarch_libdir}/tmpfiles.d/legacy.conf ];then
+ 		sed -i -e '/^L \/var\/log\/README/d' ${D}${nonarch_libdir}/tmpfiles.d/legacy.conf
+ 	fi
++        rm -rf ${D}${rootlibexecdir}/systemd/system/getty.target.wants/getty@.service
++        rm -rf ${D}/usr/lib/systemd/system/getty@.service
+ }
+ 
+ python populate_packages:prepend (){
+diff --git a/meta/recipes-devtools/python/python3/python3-manifest.json b/meta/recipes-devtools/python/python3/python3-manifest.json
+index 292c5bbc5d..3a3bb18dc1 100644
+--- a/meta/recipes-devtools/python/python3/python3-manifest.json
++++ b/meta/recipes-devtools/python/python3/python3-manifest.json
+@@ -832,6 +832,7 @@
+             "stringold",
+             "syslog",
+             "terminal",
++            "tomllib",
+             "threading",
+             "tkinter",
+             "tomllib",
+@@ -1174,6 +1175,23 @@
+             "${libdir}/python${PYTHON_MAJMIN}/__pycache__/turtle.*.pyc"
+         ]
+      },
++    "tomllib": {
++        "summary": "Provides an interface for parsing TOML",
++        "rdepends": [
++            "core",
++            "datetime",
++            "stringold"
++        ],
++        "files": [
++            "${libdir}/python${PYTHON_MAJMIN}/tomllib/"
++        ],
++        "cached": [
++            "${libdir}/python${PYTHON_MAJMIN}/tomllib/_re.*.pyc",
++            "${libdir}/python${PYTHON_MAJMIN}/tomllib/_types.*.pyc",
++            "${libdir}/python${PYTHON_MAJMIN}/tomllib/_parser.*.pyc"
++        ]
++    },
++
+     "unittest": {
+         "summary": "Python unit testing framework",
+         "rdepends": [
+-- 
+2.34.1
+
