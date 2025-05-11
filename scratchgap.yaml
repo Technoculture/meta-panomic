@@ -1,0 +1,146 @@
+header:
+    version: 1
+machine: raspberrypi4-64
+distro: poky
+build_system: oe
+target: panomic-image
+
+repos:
+    poky:
+        url: "https://git.yoctoproject.org/poky"
+        branch: "scarthgap"
+        path: "poky-scarthgap"
+        layers:
+            meta:
+            meta-poky:
+            meta-yocto-bsp:
+        patches:
+         weston:
+              repo: meta-panomic
+              path: recipes-apps/panomic/files/0001-Modified-weston-ini-and-service.patch
+         login:
+              repo: meta-panomic
+              path: recipes-apps/panomic/files/poky/0001-Added-autologin.patch
+         getty:
+              repo: meta-panomic
+              path: recipes-apps/panomic/files/poky/0001-Delete-Getty-Service-for-auto-login.patch
+    meta-openembedded:
+        url: "https://git.openembedded.org/meta-openembedded"
+        branch: "scarthgap"
+        path: "poky-scarthgap/meta-openembedded"
+        layers:
+            meta-oe:
+            meta-multimedia:
+            meta-networking:
+            meta-python:
+            meta-perl:
+            meta-filesystems:
+            meta-gnome:
+    meta-raspberrypi:
+        url: "https://git.yoctoproject.org/meta-raspberrypi"
+        branch: "scarthgap"
+        path: "poky-scarthgap/meta-raspberrypi"
+    meta-virtualization:
+        url: "https://git.yoctoproject.org/meta-virtualization"
+        branch: "scarthgap"
+        path: "poky-scarthgap/meta-virtualization"
+    meta-security:
+        url: "https://git.yoctoproject.org/meta-security"
+        branch: "scarthgap"
+        path: "poky-scarthgap/meta-security"
+    meta-panomic:
+        url: "https://github.com/Technoculture/meta-panomic.git"
+        branch: "dev"
+        path: "poky-scarthgap/meta-panomic"
+bblayers_conf_header:
+    custom-bblayers-conf: |
+        POKY_BBLAYERS_CONF_VERSION = "2"
+
+local_conf_header:
+    custom-local-conf: |
+        DISTRO_FEATURES = " \
+            security \
+            systemd \
+            usbhost \
+            wayland \
+            xwayland \
+            opengl \
+            eglfs \
+            vulkan \
+            virtualization \
+            avahi \
+            seccomp \
+            wifi \
+            polkit \
+            pam \
+            plymouth \
+            cpufrequtils \
+            gpu \
+            x11 \
+            ${DISTRO_FEATURES_LIBC} \
+        "
+        DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio sysvinit"
+        PACKAGECONFIG:append = " weston"
+        INIT_MANAGER = "systemd"
+        VIRTUAL-RUNTIME_init_manager = "systemd"
+        VIRTUAL-RUNTIME_initscripts = ""
+        MACHINE_FEATURES:remove = "apm vfat"
+        MACHINE_FEATURES:append = " gpu wifi drm"
+        IMAGE_FSTYPES = "tar.bz2 ext4 wic.bz2 wic.bmap"
+        SDIMG_ROOTFS_TYPE = "ext4"
+        IMAGE_INSTALL:append = " systemd openssh-sftp-server sudo python3 python3-pip rpi-gpio raspi-gpio coreutils bash busybox util-linux module-init-tools linux-firmware kernel-image kernel-modules gcc g++ make cmake openssh rsync git strace net-tools iputils dhcpcd which gzip wget zlib patchelf curl packagegroup-core-buildessential linux-firmware-bcm43455 avahi-daemon docker docker-compose libseccomp kmod"
+        IMAGE_FEATURES:append = " package-management"
+        IMAGE_FEATURES:remove = " debug-tweaks"
+        KERNEL_IMAGETYPE = "Image"
+        KERNEL_DEVICETREE:append = " overlays/vc4-kms-v3d.dtbo"
+        KERNEL_DEVICETREE:append = " overlays/vc4-fkms-v3d.dtbo"
+        DISABLE_OVERSCAN = "1"
+        ENABLE_UART = "1"
+        ENABLE_RPI3_SERIAL_CONSOLE = "1"
+        SERIAL_CONSOLES = "115200;ttyAMA0"
+        SDKMACHINE = "x86_64"
+        PACKAGE_CLASSES ?= "package_deb"
+        USER:CLASSES = "image-mklibs image-prelink"
+        PATCHRESOLVE = "noop"
+        RM_OLD_IMAGE = "1"
+        INHERIT += "rm_work"
+        CONF_VERSION = "2"
+        PACKAGECONFIG:append:pn-qtmultimedia = "gstreamer"
+        GPU_MEM = "512"
+        RPI_USE_U_BOOT = "1"
+        PREFERRED_PROVIDER_virtual/bootloader = "u-boot"
+        DISABLE_RPI_BOOT_LOGO = "1"
+        LICENSE_FLAGS_ACCEPTED = "commercial synaptics-killswitch"
+        IMAGE_ROOTFS_EXTRA_SPACE = "1048576"
+        TOOLCHAIN_HOST_TASK:append = "nativesdk-kmod"
+        export PATH = "/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
+        CORE_IMAGE_EXTRA_INSTALL = " \
+            mesa \
+            libdrm \
+            wayland \
+            wayland-protocols \
+            openssh \
+            openvpn \
+            wayland-utils \
+            weston \
+            weston-init \
+            libgles2 \
+            libegl \
+            libinput \
+            json-c \
+        "
+        IMAGE_INSTALL:append = " python3-dev \
+            python3-fcntl \
+            python3-core \
+            python3-wheel \
+            python3-setuptools \
+            python3-orjson \
+        "
+        BB_NO_NETWORK = "0"
+        EXTRA_IMAGE_FEATURES += "tools-sdk dev-pkgs"
+        ENABLE_DWC2_HOST = "1"
+        IMAGE_INSTALL:append = " weston weston-init"
+        IMAGE_INSTALL:append = " weston-examples"
+        IMAGE_INSTALL:append = " mingetty "
+        SYSTEMD_AUTO_ENABLE:remove = "getty@.service"
+        HOSTTOOLS += "dpkg-deb"
