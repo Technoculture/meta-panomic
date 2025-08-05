@@ -1,0 +1,42 @@
+From d9afbd7131d77fbba21f6240c55fc5a7acb0c5ec Mon Sep 17 00:00:00 2001
+From: sundaravinayagam <vinaysun21@gmail.com>
+Date: Tue, 5 Aug 2025 16:52:42 +0000
+Subject: [PATCH 1/1] Added waveshare_panel dtbo and updated kernel source
+ revision
+
+---
+ conf/machine/include/rpi-base.inc             | 1 +
+ recipes-kernel/linux/linux-raspberrypi_6.6.bb | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/conf/machine/include/rpi-base.inc b/conf/machine/include/rpi-base.inc
+index a5fd1a4..57fcd94 100644
+--- a/conf/machine/include/rpi-base.inc
++++ b/conf/machine/include/rpi-base.inc
+@@ -67,6 +67,7 @@ RPI_KERNEL_DEVICETREE_OVERLAYS ?= " \
+     overlays/w1-gpio.dtbo \
+     overlays/w1-gpio-pullup.dtbo \
+     overlays/wm8960-soundcard.dtbo \
++    overlays/vc4-kms-dsi-waveshare-panel.dtbo \ 
+     "
+ 
+ RPI_KERNEL_DEVICETREE ?= " \
+diff --git a/recipes-kernel/linux/linux-raspberrypi_6.6.bb b/recipes-kernel/linux/linux-raspberrypi_6.6.bb
+index b4d9953..58ebde0 100644
+--- a/recipes-kernel/linux/linux-raspberrypi_6.6.bb
++++ b/recipes-kernel/linux/linux-raspberrypi_6.6.bb
+@@ -1,8 +1,9 @@
+-LINUX_VERSION ?= "6.6.22"
++LINUX_VERSION ?= "6.6.78"
+ LINUX_RPI_BRANCH ?= "rpi-6.6.y"
+ LINUX_RPI_KMETA_BRANCH ?= "yocto-6.6"
+ 
+-SRCREV_machine = "c04af98514c26014a4f29ec87b3ece95626059bd"
++#SRCREV_machine = "c04af98514c26014a4f29ec87b3ece95626059bd"
++SRCREV_machine = "bba53a117a4a5c29da892962332ff1605990e17a"
+ SRCREV_meta = "6a24861d6504575a4a9f92366285332d47c7e111"
+ 
+ KMETA = "kernel-meta"
+-- 
+2.34.1
+

@@ -21,9 +21,6 @@ repos:
          login:
               repo: meta-panomic
               path: recipes-apps/panomic/files/poky/0001-Added-autologin.patch
-         getty:
-              repo: meta-panomic
-              path: recipes-apps/panomic/files/poky/0001-Delete-Getty-Service-for-auto-login.patch
     meta-openembedded:
         url: "https://git.openembedded.org/meta-openembedded"
         branch: "scarthgap"
@@ -40,6 +37,10 @@ repos:
         url: "https://git.yoctoproject.org/meta-raspberrypi"
         branch: "scarthgap"
         path: "poky-scarthgap/meta-raspberrypi"
+        patches:
+         waveshare:
+              repo: meta-panomic
+              path: recipes-apps/panomic/files/0001-Added-waveshare_panel-dtbo-and-updated-kernel.patch
     meta-virtualization:
         url: "https://git.yoctoproject.org/meta-virtualization"
         branch: "scarthgap"
@@ -143,4 +144,3 @@ local_conf_header:
         IMAGE_INSTALL:append = " weston-examples"
         IMAGE_INSTALL:append = " mingetty "
         SYSTEMD_AUTO_ENABLE:remove = "getty@.service"
-        HOSTTOOLS += "dpkg-deb"
