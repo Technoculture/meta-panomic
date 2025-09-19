@@ -4,6 +4,7 @@ machine: raspberrypi4-64
 distro: poky
 build_system: oe
 target: panomic-image
+bitbake_path: poky-scarthgap/bitbake
 
 repos:
     poky:
