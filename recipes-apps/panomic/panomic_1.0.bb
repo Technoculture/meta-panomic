@@ -65,4 +65,3 @@ do_install:append() {
 FILES:${PN} += "${systemd_system_unitdir}/system/hmi.service"
 FILES:${PN} += "/usr/lib/hmi-ui-forge"
 INSANE_SKIP:${PN} += "file-rdeps"
-
