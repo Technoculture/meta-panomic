@@ -1,0 +1,3 @@
+[submodule "custom/kas"]
+	path = custom/kas
+	url = https://github.com/siemens/kas.git
