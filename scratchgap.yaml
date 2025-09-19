@@ -12,6 +12,7 @@ repos:
         branch: "scarthgap"
         path: "poky-scarthgap"
         layers:
+            .:
             meta:
             meta-poky:
             meta-yocto-bsp:
