@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "Starting Technoculture App"
+
+/opt/run_bootanim.sh &
+
+exec /sbin/init
