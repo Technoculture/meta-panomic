@@ -35,8 +35,8 @@ repos:
             meta-filesystems:
             meta-gnome:
     meta-raspberrypi:
-        url: "https://git.yoctoproject.org/meta-raspberrypi"
-        branch: "scarthgap"
+        url: "https://github.com/Technoculture/meta-raspberrypi"
+        branch: "scarthgap_patch"
         path: "poky-scarthgap/meta-raspberrypi"
         # patches:
         #  waveshare:
