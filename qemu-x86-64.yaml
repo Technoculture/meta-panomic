@@ -107,6 +107,9 @@ local_conf_header:
        IMAGE_INSTALL:append = " mingetty "
        SYSTEMD_AUTO_ENABLE:remove = "getty@.service"
 
-       # Work around macOS/Docker hard link limitations
-       SSTATE_SCAN_FILES:append = " "
-       BB_DISKMON_DIRS = "ABORT,${TMPDIR},100M,100K ABORT,${DL_DIR},100M,100K ABORT,${SSTATE_DIR},100M,100K"
+       # Reduce disk usage for CI builds
+       INHERIT += "rm_work"
+       BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},1G,100M STOPTASKS,${DL_DIR},1G,100M STOPTASKS,${SSTATE_DIR},1G,100M ABORT,${TMPDIR},100M,100K ABORT,${DL_DIR},100M,100K ABORT,${SSTATE_DIR},100M,100K"
+       BB_GENERATE_MIRROR_TARBALLS = "0"
+       BB_NUMBER_THREADS = "4"
+       PARALLEL_MAKE = "-j 4"

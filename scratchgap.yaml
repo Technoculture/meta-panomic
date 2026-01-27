@@ -144,3 +144,9 @@ local_conf_header:
         IMAGE_INSTALL:append = " weston-examples"
         IMAGE_INSTALL:append = " mingetty "
         SYSTEMD_AUTO_ENABLE:remove = "getty@.service"
+
+        # Optimize for CI builds with limited disk space
+        BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},1G,100M STOPTASKS,${DL_DIR},1G,100M STOPTASKS,${SSTATE_DIR},1G,100M ABORT,${TMPDIR},100M,100K ABORT,${DL_DIR},100M,100K ABORT,${SSTATE_DIR},100M,100K"
+        BB_GENERATE_MIRROR_TARBALLS = "0"
+        BB_NUMBER_THREADS = "4"
+        PARALLEL_MAKE = "-j 4"
