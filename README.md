@@ -99,3 +99,12 @@ $PATH_TO_KAS_DIR/kas-container shell scratchgap.yaml
 > This approach comes from [this blog](https://embeddeduse.com/2022/06/24/setting-up-yocto-projects-with-kas/) by [Embedded Use](https://embeddeduse.com).
 
 ---
+
+# TODO
+
+These changes need to be revisited. They are changes between qemu and rpi variant.
+  - python3-orjson (custom recipe, not in standard Yocto)
+  - module-init-tools (deprecated, replaced by kmod)
+  - dhcpcd (might not be available)
+  - docker and docker-compose (can add back if needed via meta-virtualization)
+  - libseccomp (can add back if needed)
