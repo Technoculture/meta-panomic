@@ -41,6 +41,9 @@ bblayers_conf_header:
 
 local_conf_header:
    custom-local-conf: |
+       # Use generic x86-64 tuning for better QEMU compatibility
+       DEFAULTTUNE = "x86-64"
+
        DISTRO_FEATURES = " \
            security \
            systemd \
